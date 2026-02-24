@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function Homepage() {
   const [hovered, setHovered] = useState(false);
   const [liked, setLiked] = useState({});
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const toggleLike = (id) => {
     setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -95,46 +96,71 @@ const hairstyles = [
 
   return (
     <div className="font-sans">
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-4 bg-white border-b border-gray-100 shadow-sm">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #a78bfa, #ec4899)" }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/>
-              <line x1="20" y1="4" x2="8.12" y2="15.88"/>
-              <line x1="14.47" y1="14.48" x2="20" y2="20"/>
-              <line x1="8.12" y1="8.12" x2="4" y2="4"/>
-            </svg>
+      
+       <nav className="bg-white border-b border-gray-100 shadow-sm">
+        <div className="flex items-center justify-between px-6 py-4">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
+              style={{ background: "linear-gradient(135deg, #a78bfa, #ec4899)" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/>
+                <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+                <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+                <line x1="8.12" y1="8.12" x2="4" y2="4"/>
+              </svg>
+            </div>
+            <div>
+              <div className="font-bold text-gray-900 text-base leading-tight">Glam &amp; Grace</div>
+              <div className="text-gray-400 text-xs">Hair Salon</div>
+            </div>
           </div>
-          <div>
-            <div className="font-bold text-gray-900 text-base leading-tight">Glam & Grace</div>
-            <div className="text-gray-400 text-xs">Hair Salon</div>
-          </div>
-        </div>
 
-        {/* Nav Links */}
-        <div className="flex items-center gap-8">
-          {["Home", "Services", "Gallery", "About"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="text-gray-700 text-sm font-medium hover:text-pink-500 transition-colors duration-200"
+          {/* Desktop nav links */}
+          <div className="hidden md:flex items-center gap-8">
+            {["Home", "Services", "Gallery", "About"].map((item) => (
+              <a key={item} href="#" className="text-gray-700 text-sm font-medium hover:text-pink-500 transition-colors duration-200">
+                {item}
+              </a>
+            ))}
+            <button
+              className="px-5 py-2 rounded-full text-white text-sm font-semibold transition-all duration-200 hover:opacity-90 hover:shadow-lg"
+              style={{ background: "linear-gradient(135deg, #a78bfa, #ec4899)" }}
             >
-              {item}
-            </a>
-          ))}
+              Book Now
+            </button>
+          </div>
+
+          {/* Mobile hamburger */}
           <button
-            className="px-5 py-2 rounded-full text-white text-sm font-semibold transition-all duration-200 hover:opacity-90 hover:shadow-lg"
-            style={{ background: "linear-gradient(135deg, #a78bfa, #ec4899)" }}
+            className="md:hidden flex flex-col justify-center items-center gap-1.5 w-9 h-9 rounded-lg hover:bg-gray-50 transition-colors"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle menu"
           >
-            Book Now
+            <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
         </div>
+
+        {/* Mobile menu dropdown */}
+        {mobileOpen && (
+          <div className="md:hidden px-6 pb-5 flex flex-col gap-4 border-t border-gray-100">
+            {["Home", "Services", "Gallery", "About"].map((item) => (
+              <a key={item} href="#" className="text-gray-700 text-sm font-medium hover:text-pink-500 transition-colors duration-200 py-1">
+                {item}
+              </a>
+            ))}
+            <button
+              className="w-full py-2.5 rounded-full text-white text-sm font-semibold"
+              style={{ background: "linear-gradient(135deg, #a78bfa, #ec4899)" }}
+            >
+              Book Now
+            </button>
+          </div>
+        )}
       </nav>
 
-      {/* Hero Section */}
       <section
         className="relative flex flex-col items-center justify-center text-center py-32 px-8 overflow-hidden"
         style={{
@@ -142,7 +168,7 @@ const hairstyles = [
           minHeight: "420px",
         }}
       >
-        {/* Subtle noise/grain overlay */}
+       
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
           style={{
@@ -221,7 +247,6 @@ const hairstyles = [
                 
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
 
-              
                 <button
                   onClick={() => toggleLike(style.id)}
                   className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-all duration-200 hover:scale-110"
@@ -241,7 +266,7 @@ const hairstyles = [
                   </svg>
                 </button>
 
-                {/* Bottom label on hover */}
+              
                 <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
                   style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.6) 0%, transparent 100%)" }}>
                   <p className="text-white font-semibold text-sm">{style.name}</p>
@@ -284,9 +309,9 @@ const hairstyles = [
         </div>
       </section>
         <footer className="bg-gray-950 px-8 pt-14 pb-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-3 gap-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-3 md:gap-28 gap-12">
 
-          {/* Col 1 - Brand */}
+       
           <div className="flex flex-col gap-5">
             <h3 className="text-xl font-bold" style={{ color: "#a78bfa" }}>
               Glam &amp; Grace Hair Salon
@@ -294,7 +319,7 @@ const hairstyles = [
             <p className="text-gray-400 text-sm leading-relaxed">
               Nigeria's premier destination for exquisite hairstyling. We specialize in braids, weaves, natural hair care, and all your beauty needs.
             </p>
-            {/* Social Icons */}
+           
             <div className="flex items-center gap-3 mt-1">
               {[
                 {
