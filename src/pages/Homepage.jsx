@@ -1,15 +1,6 @@
 import { useState } from "react";
 
-export default function Homepage() {
-  const [hovered, setHovered] = useState(false);
-  const [liked, setLiked] = useState({});
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const toggleLike = (id) => {
-    setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const features = [
+const features = [
   {
     title: "Expert Stylists",
     desc: "Certified professionals with years of experience",
@@ -27,8 +18,6 @@ export default function Homepage() {
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5z"/>
         <path d="M9 12l2 2 4-4"/>
-        <circle cx="17" cy="7" r="2"/>
-        <path d="M15.5 7H7"/>
       </svg>
     ),
   },
@@ -52,7 +41,6 @@ export default function Homepage() {
     ),
   },
 ];
-
 
 const hairstyles = [
   {
@@ -93,13 +81,21 @@ const hairstyles = [
   },
 ];
 
+export default function Homepage() {
+  const [heroHovered, setHeroHovered] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [liked, setLiked] = useState({});
+
+  const toggleLike = (id) => {
+    setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   return (
-    <div className="font-sans">
-      
-       <nav className="bg-white border-b border-gray-100 shadow-sm">
+   <div className="font-sans min-h-screen overflow-x-hidden">
+      =
+      <nav className="bg-white border-b border-gray-100 shadow-sm">
         <div className="flex items-center justify-between px-6 py-4">
-          {/* Logo */}
+         
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
               style={{ background: "linear-gradient(135deg, #a78bfa, #ec4899)" }}>
@@ -131,7 +127,7 @@ const hairstyles = [
             </button>
           </div>
 
-          {/* Mobile hamburger */}
+    
           <button
             className="md:hidden flex flex-col justify-center items-center gap-1.5 w-9 h-9 rounded-lg hover:bg-gray-50 transition-colors"
             onClick={() => setMobileOpen((v) => !v)}
@@ -143,7 +139,7 @@ const hairstyles = [
           </button>
         </div>
 
-        {/* Mobile menu dropdown */}
+      
         {mobileOpen && (
           <div className="md:hidden px-6 pb-5 flex flex-col gap-4 border-t border-gray-100">
             {["Home", "Services", "Gallery", "About"].map((item) => (
@@ -161,6 +157,7 @@ const hairstyles = [
         )}
       </nav>
 
+      {/* Hero Section */}
       <section
         className="relative flex flex-col items-center justify-center text-center py-32 px-8 overflow-hidden"
         style={{
@@ -168,44 +165,39 @@ const hairstyles = [
           minHeight: "420px",
         }}
       >
-       
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
           style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
             backgroundSize: "200px 200px",
           }}
         />
-
         <h1 className="text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-sm mb-5">
           Elevate Your Beauty
         </h1>
         <p className="text-white text-lg font-normal opacity-90 mb-10 max-w-lg">
           Experience world-class hairstyling at Nigeria's finest salon
         </p>
-
         <button
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          onMouseEnter={() => setHeroHovered(true)}
+          onMouseLeave={() => setHeroHovered(false)}
           className="px-12 py-4 rounded-full bg-white text-base font-semibold transition-all duration-300"
           style={{
-            color: hovered ? "#ec4899" : "#818cf8",
-            boxShadow: hovered
-              ? "0 8px 30px rgba(236,72,153,0.25)"
-              : "0 4px 16px rgba(0,0,0,0.1)",
-            transform: hovered ? "translateY(-2px)" : "translateY(0)",
+            color: heroHovered ? "#ec4899" : "#818cf8",
+            boxShadow: heroHovered ? "0 8px 30px rgba(236,72,153,0.25)" : "0 4px 16px rgba(0,0,0,0.1)",
+            transform: heroHovered ? "translateY(-2px)" : "translateY(0)",
           }}
         >
           Book Your Appointment
         </button>
       </section>
+
       <section className="bg-gray-50 py-16 px-8" style={{ borderTop: "3px solid #f472b6" }}>
-        <div className="max-w-8xl mx-auto grid grid-cols-4 gap-9 text-center">
+       <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center"> 
           {features.map((feature) => (
             <div key={feature.title} className="flex flex-col items-center gap-4">
               <div
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-md"
+                className="w-20 h-20 rounded-full flex items-center justify-center shadow-md"
                 style={{ background: "linear-gradient(135deg, #c084fc, #ec4899)" }}
               >
                 {feature.icon}
@@ -217,7 +209,7 @@ const hairstyles = [
         </div>
       </section>
 
-       <section className="bg-white py-16 px-8">
+      <section className="bg-white py-16 px-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -225,15 +217,14 @@ const hairstyles = [
             <p className="text-gray-400 text-base">Browse our most requested styles and find your perfect look</p>
           </div>
 
-         
-          <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {hairstyles.map((style) => (
               <div
                 key={style.id}
                 className="relative rounded-2xl overflow-hidden group cursor-pointer"
-                style={{ height: "420px" }}
+                style={{ height: "280px" }}
               >
-                {/* Image */}
+               
                 <img
                   src={style.image}
                   alt={style.name}
@@ -244,7 +235,6 @@ const hairstyles = [
                   }}
                 />
 
-                
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
 
                 <button
@@ -266,7 +256,7 @@ const hairstyles = [
                   </svg>
                 </button>
 
-              
+                {/* Bottom label on hover */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
                   style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.6) 0%, transparent 100%)" }}>
                   <p className="text-white font-semibold text-sm">{style.name}</p>
@@ -277,6 +267,7 @@ const hairstyles = [
           </div>
         </div>
       </section>
+
       <section
         className="relative flex flex-col items-center justify-center text-center py-24 px-8 overflow-hidden"
         style={{
@@ -290,10 +281,10 @@ const hairstyles = [
             backgroundSize: "200px 200px",
           }}
         />
-        <h2 className="text-5xl font-extrabold text-white mb-4 tracking-tight">
+       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">
           Ready for Your Transformation?
         </h2>
-        <p className="text-white text-lg opacity-90 mb-10 max-w-xl">
+       <p className="text-white text-base sm:text-lg opacity-90 mb-10 max-w-xl">
           Book your appointment today and let us bring your hair dreams to life
         </p>
         <div className="flex items-center gap-5">
@@ -308,10 +299,10 @@ const hairstyles = [
           </button>
         </div>
       </section>
-        <footer className="bg-gray-950 px-8 pt-14 pb-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-3 md:gap-28 gap-12">
 
-       
+      <footer className="bg-gray-950 px-8 pt-14 pb-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+
           <div className="flex flex-col gap-5">
             <h3 className="text-xl font-bold" style={{ color: "#a78bfa" }}>
               Glam &amp; Grace Hair Salon
@@ -319,7 +310,7 @@ const hairstyles = [
             <p className="text-gray-400 text-sm leading-relaxed">
               Nigeria's premier destination for exquisite hairstyling. We specialize in braids, weaves, natural hair care, and all your beauty needs.
             </p>
-           
+        
             <div className="flex items-center gap-3 mt-1">
               {[
                 {
@@ -350,7 +341,7 @@ const hairstyles = [
             </div>
           </div>
 
-          {/* Col 2 - Quick Links */}
+      
           <div className="flex flex-col gap-5">
             <h4 className="text-white font-bold text-base">Quick Links</h4>
             <ul className="flex flex-col gap-3">
@@ -364,7 +355,7 @@ const hairstyles = [
             </ul>
           </div>
 
-          {/* Col 3 - Contact */}
+     
           <div className="flex flex-col gap-5">
             <h4 className="text-white font-bold text-base">Contact Us</h4>
             <ul className="flex flex-col gap-4">
@@ -396,7 +387,7 @@ const hairstyles = [
           </div>
         </div>
 
-        {/* Divider + copyright */}
+   
         <div className="max-w-6xl mx-auto mt-12 pt-6 border-t border-gray-800">
           <p className="text-gray-600 text-xs text-center">
             © 2024 Glam &amp; Grace Hair Salon. All rights reserved.
