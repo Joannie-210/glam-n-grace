@@ -92,7 +92,7 @@ export default function Homepage() {
 
   return (
    <div className="font-sans min-h-screen overflow-x-hidden">
-      =
+      
       <nav className="bg-white border-b border-gray-100 shadow-sm">
         <div className="flex items-center justify-between px-6 py-4">
          
