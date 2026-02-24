@@ -185,6 +185,68 @@ const hairstyles = [
           ))}
         </div>
       </section>
+
+       <section className="bg-white py-16 px-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-extrabold text-gray-900 mb-3">Popular Hairstyles</h2>
+            <p className="text-gray-400 text-base">Browse our most requested styles and find your perfect look</p>
+          </div>
+
+          {/* 3x2 Grid */}
+          <div className="grid grid-cols-3 gap-6">
+            {hairstyles.map((style) => (
+              <div
+                key={style.id}
+                className="relative rounded-2xl overflow-hidden group cursor-pointer"
+                style={{ height: "280px" }}
+              >
+                {/* Image */}
+                <img
+                  src={style.image}
+                  alt={style.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                    e.target.parentNode.style.background = "linear-gradient(135deg, #e9d5ff, #fbcfe8)";
+                  }}
+                />
+
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+
+                {/* Like button */}
+                <button
+                  onClick={() => toggleLike(style.id)}
+                  className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center shadow-md transition-all duration-200 hover:scale-110"
+                  style={{ background: "rgba(255,255,255,0.9)" }}
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill={liked[style.id] ? "#ec4899" : "none"}
+                    stroke={liked[style.id] ? "#ec4899" : "#9ca3af"}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                </button>
+
+                {/* Bottom label on hover */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                  style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.6) 0%, transparent 100%)" }}>
+                  <p className="text-white font-semibold text-sm">{style.name}</p>
+                  <p className="text-white text-xs opacity-75">{style.category}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
